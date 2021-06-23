@@ -2,10 +2,15 @@ using UnityEngine;
 
 public class Player : MonoBehaviour
 {
+    [Header("Movement")]
     [SerializeField] private float speed = 6f;
     [SerializeField] private float sprintSpeed = 12f;
     [SerializeField] private float crouchSpeed = 2f;
     [SerializeField] private float jumpForce = 5f;
+
+    [Header("Rotation")] 
+    [SerializeField] private float rotateSpeed = 10f;
+    
     private bool _isCrouching;
     private bool _isSprinting;
     private bool _isGrounded;
@@ -15,6 +20,7 @@ public class Player : MonoBehaviour
     {
         _isGrounded = false;
         _rb = GetComponent<Rigidbody>();
+        Cursor.visible = false;
     }
 
     private void Update()
@@ -23,6 +29,13 @@ public class Player : MonoBehaviour
         Crouch();
         Sprint();
         Jump();
+        Look();
+    }
+
+    private void Look()
+    {
+        float h = rotateSpeed * Input.GetAxis("Mouse X");
+        transform.Rotate(0, h, 0);
     }
 
     private void Move()
@@ -82,4 +95,5 @@ public class Player : MonoBehaviour
             _isGrounded = false;
         }
     }
+    
 }
